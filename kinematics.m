@@ -41,10 +41,10 @@ axis square
 axis([C(1)-1.2 C(1)+1.2 C(2)-1.2 C(2)+1.2])
 hold on
 xlabel("Drone configuration seen from above")
-plot([0 0.6], [0 0])
-plot([0.6 0.6+l*cos(q(1))], [0 l*sin(q(1))]);
-plot([0.6+l*cos(q(1)) 0.6+l*cos(q(1))+l*cos(q(1)+pi/2)], [l*sin(q(1)) l*sin(q(1))+l*sin(q(1)+pi/2)]);
-plot([0.6+l*cos(q(1))+l*cos(q(1)+pi/2) 0.6+l*cos(q(1))+l*cos(q(1)+pi/2)+l*cos(q(1)+pi/2+q(2))], [l*sin(q(1)) l*sin(q(1))+l*sin(q(1)+pi/2)+l*sin(q(1)+pi/2+q(2))]);
+plot([0 0.6], [0 0], 'r-')
+plot([0.6 0.6+l*cos(q(1))], [0 l*sin(q(1))], 'b-');
+plot([0.6+l*cos(q(1)) 0.6+l*cos(q(1))+l*cos(q(1)+pi/2)], [l*sin(q(1)) l*sin(q(1))+l*sin(q(1)+pi/2)], 'r-');
+plot([0.6+l*cos(q(1))+l*cos(q(1)+pi/2) 0.6+l*cos(q(1))+l*cos(q(1)+pi/2)+l*cos(q(1)+pi/2+q(2))], [l*sin(q(1))+l*sin(q(1)+pi/2) l*sin(q(1))+l*sin(q(1)+pi/2)+l*sin(q(1)+pi/2+q(2))], 'b-');
 plot(C(1), C(2), 'kx')
 hold off
 
