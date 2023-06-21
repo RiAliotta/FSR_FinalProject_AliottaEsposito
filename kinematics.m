@@ -1,8 +1,8 @@
-%% Kinematics
+%% Inertia computation
 
 clc
 
-q = [0; 0];
+q = [pi/2; pi/2];
 l = 0.6;
 m = 3.4;
 m_link = m/4;
@@ -47,6 +47,32 @@ plot([0.6+l*cos(q(1)) 0.6+l*cos(q(1))+l*cos(q(1)+pi/2)], [l*sin(q(1)) l*sin(q(1)
 plot([0.6+l*cos(q(1))+l*cos(q(1)+pi/2) 0.6+l*cos(q(1))+l*cos(q(1)+pi/2)+l*cos(q(1)+pi/2+q(2))], [l*sin(q(1))+l*sin(q(1)+pi/2) l*sin(q(1))+l*sin(q(1)+pi/2)+l*sin(q(1)+pi/2+q(2))], 'b-');
 plot(C(1), C(2), 'kx')
 hold off
+
+%% Allocation matrix computation
+
+beta = 10*2*pi/360; 
+
+R_F1C = [cos(-beta) 0 sin(-beta);
+    0 1 0;
+    -sin(-beta) 0 cos(-beta)];
+
+R_F2C = [cos(q(1)) -sin(q(1)) 0;
+    sin(q(1)) cos(q(1)) 0;
+    0 0 1]*[cos(beta) 0 sin(beta);
+    0 1 0;
+    -sin(beta) 0 cos(beta)];
+
+R_F3C = [cos(q(1)+pi/2) -sin(q(1)+pi/2) 0;
+    sin(q(1)+pi/2) cos(q(1)+pi/2) 0;
+    0 0 1]*[cos(-beta) 0 sin(-beta);
+    0 1 0;
+    -sin(-beta) 0 cos(-beta)];
+
+R_F4C = [cos(q(1)+pi/2+q(2)) -sin(q(1)+pi/2+q(2)) 0;
+    sin(q(1)+pi/2+q(2)) cos(q(1)+pi/2+q(2)) 0;
+    0 0 1]*[cos(beta) 0 sin(beta);
+    0 1 0;
+    -sin(beta) 0 cos(beta)];
 
 function S = skew(v)
     if(numel(v)~= 1)
