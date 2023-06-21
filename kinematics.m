@@ -2,7 +2,7 @@
 
 clc
 
-q = [pi/2; pi/2];
+q = [-pi/2; pi/2];
 l = 0.6;
 m = 3.4;
 m_link = m/4;
@@ -73,6 +73,26 @@ R_F4C = [cos(q(1)+pi/2+q(2)) -sin(q(1)+pi/2+q(2)) 0;
     0 0 1]*[cos(beta) 0 sin(beta);
     0 1 0;
     -sin(beta) 0 cos(beta)];
+
+Qp_tran = [R_F1C*[0; 0; 1], R_F2C*[0; 0; 1], R_F3C*[0; 0; 1], R_F4C*[0; 0; 1]];
+
+ki = 0.01;
+
+Qp_rot = [(skew(C1-C)+ki*eye(3))*R_F1C*[0; 0; 1], (skew(C2-C)+ki*eye(3))*R_F2C*[0; 0; 1], (skew(C3-C)+ki*eye(3))*R_F3C*[0; 0; 1], (skew(C4-C)+ki*eye(3))*R_F4C*[0; 0; 1]];
+
+up = ([Qp_tran(3,:); Qp_rot])\[1; 0; 0; 0];
+us = m*9.81/norm(Qp_tran*up)*up;
+fs = Qp_tran*us;
+alfa_x = atan2(fs(2), fs(3));
+alfa_y = atan2(-fs(1), sqrt(fs(2)^2+fs(3)^2));
+R_C_CoG = [cos(alfa_y) 0 sin(alfa_y);
+    0 1 0;
+    -sin(alfa_y) 0 cos(alfa_y)]*[1 0 0;
+    0 cos(alfa_x) -sin(alfa_x);
+    0 sin(alfa_x) cos(alfa_x)];
+Q_tran = R_C_CoG*Qp_tran;
+Q_rot = R_C_CoG*Qp_rot;
+
 
 function S = skew(v)
     if(numel(v)~= 1)
