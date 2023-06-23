@@ -44,21 +44,27 @@ beta = 10*2*pi/360;
 ki = 0.01;
 % syms beta ki real
 
-R_F1C = [cos(-beta) 0 sin(-beta);
+R_FC_minus = [cos(-beta) 0 sin(-beta);
          0          1 0;
         -sin(-beta) 0 cos(-beta)];
 
+R_FC_plus = [cos(beta) 0 sin(beta);
+         0          1 0;
+        -sin(beta) 0 cos(beta)];
+
+R_F1C = R_FC_minus;
+
 R_F2C = [cos(q1) -sin(q1) 0;
          sin(q1) cos(q1) 0;
-         0 0 1]*R_F1C;
+         0 0 1]*R_FC_plus;
 
 R_F3C = [cos(q1+pi/2) -sin(q1+pi/2) 0;
         sin(q1+pi/2)   cos(q1+pi/2) 0;
-        0              0            1]*R_F1C; 
+        0              0            1]*R_FC_minus; 
 
 R_F4C = [cos(q1+pi/2+q2) -sin(q1+pi/2+q2) 0;
          sin(q1+pi/2+q2)  cos(q1+pi/2+q2) 0;
-         0                0               1]*R_F1C;
+         0                0               1]*R_FC_plus;
 
 Qp_tran = [R_F1C*[0; 0; 1], R_F2C*[0; 0; 1], R_F3C*[0; 0; 1], R_F4C*[0; 0; 1]];
 
